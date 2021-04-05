@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres
+    container_name: go-db
+    restart: always
+    environment:
+      - POSTGRES_DB=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_PORT=5432
+    # volumes:
+    #   - pg-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  # redis:
+  #   image: redis
+  #   container_name: go-redis
+  #   # restart: always
+  #   restart: unless-stopped
+  #   env_file:
+  #     - redis.env
+  #   ports:
+  #     - 6379:6379
+
+  # api:
+  #   build: ./services
+  #   command:
+  #     sh -c 'npm i && npm run build && npm run start'
+  #   env_file:
+  #     - api.env
+  #   volumes:
+  #     - ./services:/var/www/api
+  #   ports:
+  #     - 3001:3001
+# volumes:
+#   pg-data:
+#     external: true
