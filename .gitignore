@@ -1,0 +1,12 @@
+**/*/bin
+**/*/build
+**/*/dist
+**/*/node_modules
+**/*/coverage
+**/*/test
+
+*.env
+*.log
+*.o
+*.out
+*.exe

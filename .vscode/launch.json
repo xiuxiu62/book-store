@@ -1,0 +1,24 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Node",
+			"type": "pwa-node",
+			"request": "launch",
+			"program": "${workspaceFolder}\\src\\app.js",
+			"restart": true,
+			"runtimeExecutable": "nodemon",
+			"console": "integratedTerminal",
+			"args": ["--extensionDevelopmentPath=${workspaceFolder}"]
+		},
+		{
+			"type": "pwa-chrome",
+			"request": "launch",
+			"name": "Brave",
+			"url": "http://localhost:8000",
+			"userDataDir": true,
+			"runtimeExecutable": "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe",
+			"runtimeArgs": ["--remote-debugging-port=9222"]
+		}
+	]
+}
