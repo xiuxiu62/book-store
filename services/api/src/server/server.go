@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/justincremer/go-orm/src/database"
 	"github.com/justincremer/go-orm/src/models/book"
 	"github.com/justincremer/go-orm/src/models/user"
@@ -32,6 +34,15 @@ func Create(port string, config fiber.Config) *fiber.App {
 	conn.AutoMigrate(&user.User{})
 
 	// Middleware
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:3000, http://localhost:8000",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
+
+	app.Use(logger.New(logger.Config{
+		Format:   "${status} - ${method} ${path}\n",
+		TimeZone: timezone,
+	}))
 
 	// Use Endpoints
 	app.Get("/", welcome)

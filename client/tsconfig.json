@@ -16,6 +16,8 @@
 		"strictNullChecks": true,
 		"resolveJsonModule": true,
 		"skipDefaultLibCheck": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
 		"noFallthroughCasesInSwitch": true,
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true

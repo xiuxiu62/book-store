@@ -1,15 +1,8 @@
 import { useState } from 'react';
-import {
-	Button,
-	Card,
-	CardContent,
-	FormControl,
-	Grid,
-	Input,
-	Typography,
-} from '@material-ui/core';
+import { Box, Button, Card, Grid, Input, Typography } from '@material-ui/core';
 import { BookListView } from './view';
 import { book } from 'src/app/shared/api_client/book';
+import * as BookService from 'src/app/shared/api_client/book';
 
 const BookPage = () => {
 	const [books, setBooks]: [Array<book>, any] = useState([]);
@@ -21,9 +14,20 @@ const BookPage = () => {
 		dispatch(field);
 	};
 
-	const submissionHandler = (book: book): void => {
+	const submissionHandler = async (book: book) => {
 		const copy: Array<book> = books;
 		copy.push(book);
+
+		// console.log(await BookService.create(book));
+
+		await BookService.create(book).then((data: Object) => {
+			if (data !== null) {
+				let book: book = data as book;
+
+				console.log(data);
+				console.log(book);
+			}
+		});
 
 		setAuthor('');
 		setTitle('');
@@ -35,11 +39,7 @@ const BookPage = () => {
 		setBooks(books.filter((b) => b !== book));
 
 	return (
-		<Grid
-			container
-			direction="column"
-			justify="flex-start"
-			alignItems="center"
+		<Box
 			style={{
 				marginTop: '1rem',
 				position: 'absolute',
@@ -48,72 +48,69 @@ const BookPage = () => {
 				transform: 'translate(-50%, -50%)',
 			}}
 		>
-			<Card style={{ backgroundColor: '#e6e6e6', padding: '1rem' }}>
-				<CardContent>
-					<FormControl>
-						<Typography
-							variant="h5"
-							component="h2"
-							align="center"
-							style={{
-								borderBottom: '0.5px solid rgba(0, 0, 0, .2)',
-							}}
-						>
-							Books
-						</Typography>
-						<BookListView
-							books={books}
-							removeHandler={removeHandler}
-						/>
-						<Input
-							id="todo-input"
-							type="text"
-							style={{ paddingTop: '1.5rem' }}
-							placeholder="Enter title..."
-							value={title}
-							onChange={(e) =>
-								changeHandler(e.target.value, setTitle)
-							}
-						/>
-						<Input
-							id="todo-input"
-							type="text"
-							style={{ paddingTop: '1.5rem' }}
-							placeholder="Enter author..."
-							value={author}
-							onChange={(e) =>
-								changeHandler(e.target.value, setAuthor)
-							}
-						/>
-						<Input
-							id="todo-input"
-							type="text"
-							style={{ paddingTop: '1.5rem' }}
-							placeholder="Enter genre..."
-							value={genre}
-							onChange={(e) =>
-								changeHandler(e.target.value, setGenre)
-							}
-						/>
-						<Button
-							style={{
-								marginTop: '1rem',
-								backgroundColor: '#dddddd',
-							}}
-							onClick={() =>
-								submissionHandler({
-									Title: title,
-									Author: author,
-									Genre: genre,
-								})
-							}
-						>
-							Submit
-						</Button>
-					</FormControl>
-				</CardContent>
+			<Card style={{ backgroundColor: '#e6e6e6', padding: '2rem' }}>
+				<Grid
+					container
+					justify="center"
+					alignItems="center"
+					direction="column"
+				>
+					<Typography
+						variant="h5"
+						component="h2"
+						align="center"
+						style={{
+							borderBottom: '0.5px solid rgba(0, 0, 0, .2)',
+						}}
+					>
+						Books
+					</Typography>
+					<BookListView books={books} removeHandler={removeHandler} />
+					<Input
+						type="text"
+						style={{ paddingTop: '1.5rem' }}
+						placeholder="Enter title..."
+						value={title}
+						onChange={(e) =>
+							changeHandler(e.target.value, setTitle)
+						}
+					/>
+					<Input
+						type="text"
+						style={{ paddingTop: '1.5rem' }}
+						placeholder="Enter author..."
+						value={author}
+						onChange={(e) =>
+							changeHandler(e.target.value, setAuthor)
+						}
+					/>
+					<Input
+						type="text"
+						style={{ paddingTop: '1.5rem' }}
+						placeholder="Enter genre..."
+						value={genre}
+						onChange={(e) =>
+							changeHandler(e.target.value, setGenre)
+						}
+					/>
+					<Button
+						style={{
+							marginTop: '1rem',
+							backgroundColor: '#dddddd',
+						}}
+						onClick={() =>
+							submissionHandler({
+								Title: title,
+								Author: author,
+								Genre: genre,
+							})
+						}
+					>
+						Submit
+					</Button>
+				</Grid>
 			</Card>
-		</Grid>
+		</Box>
 	);
 };
 

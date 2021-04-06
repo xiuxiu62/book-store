@@ -26,9 +26,9 @@ const UserView = (props: { user: user; removeHandler: any }) => {
 			style={{ marginTop: '0.5rem' }}
 		>
 			<Grid direction="column" style={{ paddingRight: '1rem' }}>
-				<Box>{user.Username}</Box>
-				<Box>{user.Email}</Box>
-				<Box>{user.Phone}</Box>
+				<Box>{user.username}</Box>
+				<Box>{user.email}</Box>
+				<Box>{user.phone}</Box>
 			</Grid>
 			<Button
 				style={{ alignSelf: 'right' }}
